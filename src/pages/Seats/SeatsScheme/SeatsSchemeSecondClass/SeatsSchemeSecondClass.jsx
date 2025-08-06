@@ -1,4 +1,3 @@
-/* eslint-disable-next-line no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,7 +7,7 @@ const SeatButton = ({ index, available, onSelect }) => {
       className={`seat ${available ? '' : 'disabled'}`}
       type="button"
       disabled={!available}
-      onClick={() => onSelect(index)}
+      onClick={(event) => onSelect(index, event)} {/* Передаём event */}
     >
       {index}
     </button>
@@ -27,7 +26,7 @@ const RowOfSeats = ({ startIndex, count, getStatus, onSelect }) => {
       key={startIndex + idx}
       index={startIndex + idx}
       available={getStatus(startIndex + idx)}
-      onSelect={onSelect}
+      onSelect={onSelect} // onSelect теперь принимает (index, event)
     />
   ));
 };
@@ -42,10 +41,10 @@ RowOfSeats.propTypes = {
 function SeatsSchemeSecondClass({ seats, onChange }) {
   const getStatus = (i) => {
     const foundSeat = seats.find((seat) => seat.index === i);
-    return foundSeat && foundSeat.available;
+    return foundSeat ? foundSeat.available : false;
   };
 
-  const handleSeatSelection = (seatNumber) => {
+  const handleSeatSelection = (seatNumber, event) => { // Принимаем event как аргумент
     const targetContainer = event.currentTarget.closest(".seats__container");
     const isDeparture = targetContainer.dataset.name === "departure";
 
@@ -57,9 +56,9 @@ function SeatsSchemeSecondClass({ seats, onChange }) {
     }
 
     const wagonDetailsEl = targetContainer.querySelector(".wagon-number").textContent.trim();
-    const coachId = targetContainer.querySelectorAll(".wagon-details__item")
+    const coachId = Array.from(targetContainer.querySelectorAll(".wagon-details__item"))
       .find((el) => el.textContent.includes(wagonDetailsEl))
-      ?.id;
+      ?.id || "";
 
     const buttonEl = event.currentTarget;
     buttonEl.classList.toggle("selected");
@@ -67,7 +66,7 @@ function SeatsSchemeSecondClass({ seats, onChange }) {
     onChange({
       way: isDeparture ? "departure" : "arrival",
       type: "second",
-      coach_id: coachId || "",
+      coach_id: coachId,
       seatIndex: seatNumber,
       seatSide: "",
       selected: buttonEl.classList.contains("selected"),
@@ -76,34 +75,36 @@ function SeatsSchemeSecondClass({ seats, onChange }) {
 
   return (
     <div className="seats-second-class">
-      <ul className="left-side-seats">{[...Array(8)].map((_, i) => <div key={i} />)}</ul>
+      <ul className="left-side-seats">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} />
+        ))}
+      </ul>
       <ul className="right-side-seats">
         {[...Array(8)].map((_, rowIdx) => (
-          <>
+          <React.Fragment key={rowIdx}>
             <RowOfSeats
-              key={`${rowIdx}-upper`}
               startIndex={rowIdx * 4 + 1}
               count={2}
               getStatus={getStatus}
-              onSelect={handleSeatSelection}
+              onSelect={handleSeatSelection} // передаём как есть — будет вызвана с (index, event)
             />
             <RowOfSeats
-              key={`${rowIdx}-lower`}
               startIndex={rowIdx * 4 + 3}
               count={2}
               getStatus={getStatus}
               onSelect={handleSeatSelection}
             />
-          </>
+          </React.Fragment>
         ))}
       </ul>
     </div>
   );
 }
 
-export default SeatsSchemeSecondClass;
-
 SeatsSchemeSecondClass.propTypes = {
   seats: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default SeatsSchemeSecondClass;

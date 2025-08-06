@@ -7,7 +7,7 @@ const SeatButton = ({ number, available, onClick }) => {
       className={`scheme__seats-item ${available ? '' : 'disabled'}`}
       type="button"
       disabled={!available}
-      onClick={onClick}
+      onClick={onClick} // передаём event дальше
     >
       {number}
     </button>
