@@ -1,13 +1,13 @@
 /* eslint-disable-next-line no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
-import AppContext from "../context/appContext";
-import OrderFilters from "../OrderFilters/OrderFilters";
-import OrderLastTickets from "../OrderLastTickets/OrderLastTickets";
-import OrderResultsControl from "../OrderResultsControl/OrderResultsControl";
-import OrderPagination from "../OrderPagination/OrderPagination";
-import useGetRoutes from "../services/useGetRoutes";
-import Modal from "../components/Modal/Modal";
-import Load from "../components/Load/Load";
+import AppContext from "../context/appContext.jsx";
+import OrderFilters from "../OrderFilters/OrderFilters.jsx";
+import OrderLastTickets from "../OrderLastTickets/OrderLastTickets.jsx";
+import OrderResultsControl from "../OrderResultsControl/OrderResultsControl.jsx";
+import OrderPagination from "../OrderPagination/OrderPagination.jsx";
+import useGetRoutes from "../services/useGetRoutes.jsx";
+import Modal from "../components/Modal/Modal.jsx";
+import Load from "../components/Load/Load.jsx";
 import "./OrderContainer.css";
 
 function OrderContainer() {

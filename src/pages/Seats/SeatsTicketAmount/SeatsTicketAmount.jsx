@@ -1,6 +1,6 @@
 /* eslint-disable-next-line no-unused-vars */
 import React, { useContext } from "react";
-import OrderContext from "../context/orderContext";
+import OrderContext from "../context/orderContext.jsx";
 import "./SeatsTicketAmount.css";
 
 const SeatsTicketAmount = () => {

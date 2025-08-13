@@ -1,11 +1,11 @@
 /* eslint-disable-next-line no-unused-vars */
 import React, { useContext, useState, useEffect } from 'react';
-import AppContext from '../context/AppContext';
-import OrderContext from '../context/orderContext';
-import useGetSeats from '../services/useGetSeats';
+import AppContext from '../context/appContext.jsx';
+import OrderContext from '../context/orderContext.jsx';
+import useGetSeats from '../services/useGetSeats.jsx';
 import { useNavigate } from 'react-router-dom';
-import SeatsContainer from '../Seats/SeatsContainer/SeatsContainer';
-import Modal from '../components/Modal/Modal';
+import SeatsContainer from '../Seats/SeatsContainer/SeatsContainer.jsx';
+import Modal from '../components/Modal/Modal.jsx';
 import './Seats.css';
 
 const Seats = () => {
